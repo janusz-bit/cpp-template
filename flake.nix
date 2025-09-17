@@ -96,5 +96,7 @@
         };
       };
 
+      templates.default = { path = ./.; description = "C++ template"; };
+
     };
 }
