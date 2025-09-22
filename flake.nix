@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nix-vscode-extensions = {
+      url = "github:nix-community/nix-vscode-extensions";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -16,6 +20,7 @@
       pkgs = import nixpkgs {
         system = linux;
         config.allowUnfree = true;
+        overlays = [ inputs.nix-vscode-extensions.overlays.default ];
       };
 
     in
@@ -26,6 +31,7 @@
           name = "sdl-dev-shell";
           shellHook = ''
             echo "Welcome to the development environment!"
+            echo "For IDE type: codium ."
           '';
           buildInputs = with pkgs; [
             cmake
@@ -39,7 +45,15 @@
             ninja
             # sdl3
             gdb
-
+            (vscode-with-extensions.override {
+              vscode = vscodium;
+              vscodeExtensions = with pkgs.vscode-marketplace; [
+                ms-vscode.cpptools
+                llvm-vs-code-extensions.vscode-clangd
+                ms-vscode.cmake-tools
+                jnoortheen.nix-ide
+              ];
+            })
           ];
         };
       };
