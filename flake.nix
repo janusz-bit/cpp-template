@@ -27,6 +27,7 @@
     {
       devShells.${linux} = {
         default = pkgs.mkShell {
+          
 
           name = "sdl-dev-shell";
           shellHook = ''
@@ -55,6 +56,8 @@
               ];
             })
           ];
+
+          HOME = "$PWD";
         };
       };
 
