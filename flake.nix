@@ -52,6 +52,7 @@
                 ms-vscode.cpptools
                 llvm-vs-code-extensions.vscode-clangd
                 ms-vscode.cmake-tools
+                twxs.cmake
                 jnoortheen.nix-ide
               ];
             })
